@@ -85,7 +85,7 @@ class Kohana_MMI_DB
 
 		// Create and configure query
 		$query = new Database_Query_Builder_Select;
-		$query->from($table)->limit($limit)->offset($offset);
+		$query->from($table)->distinct($distinct)->limit($limit)->offset($offset);
 
 		// Set columns
 		self::_set_columns($query, $columns);
