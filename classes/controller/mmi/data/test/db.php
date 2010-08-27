@@ -23,12 +23,11 @@ class Controller_MMI_Data_Test_DB extends Controller
 	{
 		$model = 'MMI_Emails';
 		$as_array = TRUE;
-		$array_key = 'id';
 		$query_parms = array
 		(
 			'where_parms' => array('id' => array(1, 2))
 		);
-		$data = MMI_DB::select($model, $as_array, $array_key, $query_parms);
+		$data = MMI_DB::select($model, $as_array, $query_parms);
 		MMI_Debug::dead($data, 'data');
 	}
 } // End Controller_MMI_Data_Test_DB

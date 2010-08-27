@@ -11,8 +11,6 @@ class Kohana_MMI_Jelly extends MMI_DB
 {
 	/**
 	 * Do a database select using Jelly.
-	 * If an array key is specified, the results are returned as an associative
-	 * array using the specified key.
 	 * Array data is unserialized and formatted according to the model's meta data.
 	 *
 	 * The following keys can be used to specify query settings:
@@ -27,19 +25,17 @@ class Kohana_MMI_Jelly extends MMI_DB
 	 *
 	 * @param	string	the model name
 	 * @param	boolean	return the results as an array?
-	 * @param	string	the array key
 	 * @param	array	an associative array of query settings
 	 * @return	mixed
 	 */
-	public static function select($model, $as_array = TRUE, $array_key = NULL, $query_parms = array())
+	public static function select($model, $as_array = TRUE, $query_parms = array())
 	{
 		// Extract query parameters
 		$query_parms = MMI_DB::_get_query_parms($query_parms);
 		extract($query_parms,  EXTR_OVERWRITE);
 
 		// Configure array key, columns, db, distinct, limit, offset, order by, and where type parameters
-		$array_key = self::_get_array_key($array_key);
-		$columns = self::_get_columns($columns, $array_key);
+		$columns = self::_get_columns($columns);
 		$db = self::_get_db($db);
 		$distinct = self::_get_distinct($distinct);
 		$limit = self::_get_limit($limit);
@@ -77,7 +73,7 @@ class Kohana_MMI_Jelly extends MMI_DB
 
 		if ($as_array)
 		{
-			$result = self::as_array($result, $columns, $array_key, TRUE);
+			$result = self::as_array($result, $columns, TRUE);
 		}
 		return $result;
 	}
@@ -120,28 +116,19 @@ class Kohana_MMI_Jelly extends MMI_DB
 	 *
 	 * @param	mixed		the data
 	 * @param	array		the columns names
-	 * @param	string		the array key
 	 * @param	boolean		decode the results? (unserialize, format dates, etc.)
 	 * @param	Jelly_meta	meta information about the model
 	 * @return	array
 	 */
-	public static function as_array($data, $columns = NULL, $array_key = NULL, $decode = TRUE, Jelly_Meta $meta = NULL)
+	public static function as_array($data, $columns = NULL, $decode = TRUE, Jelly_Meta $meta = NULL)
 	{
 		$is_model = FALSE;
 		$columns_specified = (is_array($columns) AND count($columns) > 0);
-		if ($columns_specified)
-		{
-			// Set the array key
-			if ( ! empty($array_key))
-			{
-				$array_key = Arr::get($columns, $array_key);
-			}
-		}
 
 		// Process Jelly collection
 		if ($data instanceof Jelly_Collection)
 		{
-			$temp = $data->as_array($array_key);
+			$temp = $data->as_array();
 			if (count($temp) > 0)
 			{
 				$meta = $data->current()->meta();
@@ -168,14 +155,7 @@ class Kohana_MMI_Jelly extends MMI_DB
 				}
 				$temp = array_intersect_key($temp, array_flip($columns));
 			}
-			if ( ! empty($array_key))
-			{
-				$data = array($temp[$array_key] => $temp);
-			}
-			else
-			{
-				$data = array($temp);
-			}
+			$data = array($temp);
 		}
 
 		// Decode data

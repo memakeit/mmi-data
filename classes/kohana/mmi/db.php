@@ -48,9 +48,6 @@ class Kohana_MMI_DB
 
 	/**
 	 * Do a database select using the Database_Query_Builder_Select.
-	 * If an array key is specified, the results are returned as an associative
-	 * array using the specified key.
-	 *
 	 * The following keys can be used to specify query settings:
 	 *	- columns,
 	 *	- db,
@@ -63,19 +60,17 @@ class Kohana_MMI_DB
 	 *
 	 * @param	string	the table name
 	 * @param	boolean	return the results as an array?
-	 * @param	string	the array key
 	 * @param	array	an associative array of query settings
 	 * @return	mixed
 	 */
-	public static function select($table, $as_array = TRUE, $array_key = NULL, $query_parms = array())
+	public static function select($table, $as_array = TRUE, $query_parms = array())
 	{
 		// Extract queruy parameters
 		$query_parms = MMI_DB::_get_query_parms($query_parms);
 		extract($query_parms,  EXTR_OVERWRITE);
 
 		// Configure array key, columns, db, distinct, limit, offset, order by, and where type settings
-		$array_key = self::_get_array_key($array_key);
-		$columns = self::_get_columns($columns, $array_key);
+		$columns = self::_get_columns($columns);
 		$db = self::_get_db($db);
 		$distinct = self::_get_distinct($distinct);
 		$limit = self::_get_limit($limit);
@@ -106,20 +101,9 @@ class Kohana_MMI_DB
 			$data = array();
 			if ($db_result->count() > 0)
 			{
-				if ( ! empty($array_key))
-				{
-					$array_key = $columns[$array_key];
-				}
 				foreach ($db_result as $item)
 				{
-					if (empty($array_key))
-					{
-						$data[] = $item;
-					}
-					else
-					{
-						$data[Arr::get($item, $array_key)] = $item;
-					}
+					$data[] = $item;
 				}
 			}
 			unset($db_result);
@@ -132,34 +116,12 @@ class Kohana_MMI_DB
 	}
 
 	/**
-	 * Validate the array key.
-	 *
-	 * @param	string	the array key
-	 * @return	mixed
-	 */
-	protected static function _get_array_key($input)
-	{
-		$array_key = $input;
-		if (MMI_Util::not_set($input))
-		{
-			$array_key = NULL;
-		}
-		elseif (MMI_Util::is_set($input) AND ! is_string($input))
-		{
-			$array_key = NULL;
-		}
-		return $array_key;
-	}
-
-	/**
 	 * Validate the column names.
-	 * If the array key is not in list of column names, add it.
 	 *
 	 * @param	array	an associative array of column names and aliases
-	 * @param	string	the name of the array
 	 * @return	mixed
 	 */
-	protected static function _get_columns($input, $array_key)
+	protected static function _get_columns($input)
 	{
 		$columns = $input;
 		if (MMI_Util::not_set($input))
@@ -174,10 +136,6 @@ class Kohana_MMI_DB
 		if ( ! empty($columns))
 		{
 			$columns = MMI_Arr::make_associative($columns);
-			if ( ! empty($array_key) AND ! array_key_exists($array_key, $columns))
-			{
-				$columns[$array_key] = $array_key;
-			}
 		}
 		return $columns;
 	}
