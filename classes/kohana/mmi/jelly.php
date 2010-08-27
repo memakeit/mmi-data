@@ -7,7 +7,7 @@
  * @copyright	(c) 2010 Me Make It
  * @license		http://www.memakeit.com/license
  */
-class Kohana_MMI_Jelly extends MMI_DB
+class Kohana_MMI_Jelly extends MMI_Data
 {
 	/**
 	 * Do a database select using Jelly.
