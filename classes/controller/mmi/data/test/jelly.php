@@ -28,6 +28,6 @@ class Controller_MMI_Data_Test_Jelly extends Controller
 			'where_parms' => array('id' => array(1, 2))
 		);
 		$data = MMI_Jelly::select($model, $as_array, $query_parms);
-		MMI_Debug::dead($data, 'data');
+		MMI_Debug::dump($data, 'data');
 	}
 } // End Controller_MMI_Data_Test_Jelly
