@@ -32,7 +32,7 @@ class Kohana_MMI_Jelly extends MMI_Data
 	{
 		// Extract query parameters
 		$query_parms = MMI_DB::_get_query_parms($query_parms);
-		extract($query_parms,  EXTR_OVERWRITE);
+		extract($query_parms, EXTR_OVERWRITE);
 
 		// Configure array key, columns, db, distinct, limit, offset, order by, and where type parameters
 		$columns = self::_get_columns($columns);
