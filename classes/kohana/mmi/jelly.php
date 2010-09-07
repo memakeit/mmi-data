@@ -99,7 +99,7 @@ class Kohana_MMI_Jelly extends MMI_Data
 			{
 				$success = FALSE;
 				$errors = $e->array->errors();
-				MMI_Log::log_error(__METHOD__, __LINE__, 'Validation exception: '.Kohana::exception_text($e).'. Validation errors: '.implode(', ', $errors));
+				MMI_Log::log_error(__METHOD__, __LINE__, 'Validation exception: '.Kohana::exception_text($e).'. Validation errors: '.json_encode($errors));
 			}
 			catch (Exception $e)
 			{
