@@ -93,7 +93,6 @@ class Kohana_MMI_Jelly extends MMI_Data
 			try
 			{
 				$model->save();
-				$success = TRUE;
 			}
 			catch (Validate_Exception $e)
 			{
