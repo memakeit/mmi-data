@@ -235,7 +235,7 @@ class Kohana_MMI_Jelly extends MMI_Data
 						{
 							case 'date':
 								$item[$name] = $method($parms['format'], $value);
-								break;
+							break;
 
 							case 'unserialize':
 								$temp = $value;
@@ -248,11 +248,11 @@ class Kohana_MMI_Jelly extends MMI_Data
 									}
 								}
 								$item[$name] = $temp;
-								break;
+							break;
 
 							default:
 								$item[$name] = $method($value);
-								break;
+							break;
 						}
 					}
 					$data[$idx] = $item;
