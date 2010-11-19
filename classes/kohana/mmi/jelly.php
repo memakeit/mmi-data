@@ -111,6 +111,36 @@ class Kohana_MMI_Jelly extends MMI_Data
 	}
 
 	/**
+	 * Update a Jelly model.
+	 *
+	 * @param 	integer		the model id
+	 * @param 	Jelly_Model	the model object
+	 * @param	array		the error messages if the save fails
+	 * @return	boolean
+	 */
+	public static function update($id, Jelly_Model $model, & $errors = array())
+	{
+		$success = TRUE;
+		try
+		{
+			$model->save($id);
+		}
+		catch (Validate_Exception $e)
+		{
+			$success = FALSE;
+			$errors = $e->array->errors();
+			MMI_Log::log_error(__METHOD__, __LINE__, 'Validation exception: '.Kohana::exception_text($e).'. Validation errors: '.json_encode($errors));
+		}
+		catch (Exception $e)
+		{
+			$success = FALSE;
+			$errors[] = Kohana::exception_text($e);
+			MMI_Log::log_error(__METHOD__, __LINE__, Kohana::exception_text($e));
+		}
+		return $success;
+	}
+
+	/**
 	 * Return Jelly data as an array.
 	 *
 	 * @param	mixed		the data
