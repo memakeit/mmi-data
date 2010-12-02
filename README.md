@@ -2,4 +2,4 @@
 
 **Dependencies:**
 
-* mmi-core
+* mmi-util
