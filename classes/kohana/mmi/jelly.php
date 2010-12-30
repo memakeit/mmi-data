@@ -20,7 +20,7 @@ class Kohana_MMI_Jelly extends MMI_Data
 	 *	- limit,
 	 *	- offset,
 	 *	- order_by,
-	 *	- where_parms,
+	 *	- where_params,
 	 *	- where_type
 	 *
 	 * @param	string	the model name
@@ -28,11 +28,11 @@ class Kohana_MMI_Jelly extends MMI_Data
 	 * @param	array	an associative array of query settings
 	 * @return	mixed
 	 */
-	public static function select($model, $as_array = TRUE, $query_parms = array())
+	public static function select($model, $as_array = TRUE, $query_params = array())
 	{
 		// Extract query parameters
-		$query_parms = MMI_DB::_get_query_parms($query_parms);
-		extract($query_parms, EXTR_OVERWRITE);
+		$query_params = MMI_DB::_get_query_params($query_params);
+		extract($query_params, EXTR_OVERWRITE);
 
 		// Configure array key, columns, db, distinct, limit, offset, order by, and where type parameters
 		$columns = self::_get_columns($columns);
@@ -62,7 +62,7 @@ class Kohana_MMI_Jelly extends MMI_Data
 		}
 
 		 // Set where parameters
-		self::_set_where_parms($builder, $where_parms, $where_type);
+		self::_set_where_params($builder, $where_params, $where_type);
 
 		// Set order by
 		self::_set_order_by($builder, $order_by);
@@ -259,12 +259,12 @@ class Kohana_MMI_Jelly extends MMI_Data
 				foreach ($item as $name => $value)
 				{
 					$decode_methods = Arr::get($decodings, $name, array());
-					foreach ($decode_methods as $method => $parms)
+					foreach ($decode_methods as $method => $params)
 					{
 						switch ($method)
 						{
 							case 'date':
-								$item[$name] = $method($parms['format'], $value);
+								$item[$name] = $method($params['format'], $value);
 							break;
 
 							case 'unserialize':

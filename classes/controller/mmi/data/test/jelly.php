@@ -23,11 +23,11 @@ class Controller_MMI_Data_Test_Jelly extends Controller
 	{
 		$model = 'MMI_Emails';
 		$as_array = TRUE;
-		$query_parms = array
+		$query_params = array
 		(
-			'where_parms' => array('id' => array(1, 2))
+			'where_params' => array('id' => array(1, 2))
 		);
-		$data = MMI_Jelly::select($model, $as_array, $query_parms);
+		$data = MMI_Jelly::select($model, $as_array, $query_params);
 		MMI_Debug::dump($data, 'data');
 	}
 } // End Controller_MMI_Data_Test_Jelly

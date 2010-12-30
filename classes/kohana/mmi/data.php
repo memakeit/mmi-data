@@ -223,12 +223,12 @@ class Kohana_MMI_Data
 	 * @param	string							the where type (and | or)
 	 * @return	void
 	 */
-	protected static function _set_where_parms($query, $where_parms, $where_type)
+	protected static function _set_where_params($query, $where_params, $where_type)
 	{
 		$where_type = strtolower($where_type).'_where';
-		if (MMI_Util::is_set($where_parms) AND is_array($where_parms) AND count($where_parms) > 0 AND Arr::is_assoc($where_parms))
+		if (MMI_Util::is_set($where_params) AND is_array($where_params) AND count($where_params) > 0 AND Arr::is_assoc($where_params))
 		{
-			foreach ($where_parms as $name => $values)
+			foreach ($where_params as $name => $values)
 			{
 				if (is_array($values) AND count($values) === 1)
 				{
@@ -250,10 +250,10 @@ class Kohana_MMI_Data
 	 * Merge the parameters specified with the defaults.
 	 *
 	 * @param	array	an associative array of query settings (columns, db,
-	 * 					distinct, limit, offset, order_by, where_parms, where_type)
+	 * 					distinct, limit, offset, order_by, where_params, where_type)
 	 * @return	array
 	 */
-	protected static function _get_query_parms($query_parms)
+	protected static function _get_query_params($query_params)
 	{
 		$defaults = array
 		(
@@ -263,10 +263,10 @@ class Kohana_MMI_Data
 			'limit'			=> NULL,
 			'offset'		=> NULL,
 			'order_by'		=> NULL,
-			'where_parms'	=> NULL,
+			'where_params'	=> NULL,
 			'where_type'	=> NULL,
 		);
-		$query_parms = Arr::merge($defaults, $query_parms);
-		return array_intersect_key($query_parms, $defaults);
+		$query_params = Arr::merge($defaults, $query_params);
+		return array_intersect_key($query_params, $defaults);
 	}
 } // End Kohana_MMI_Data

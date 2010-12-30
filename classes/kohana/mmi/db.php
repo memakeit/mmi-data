@@ -55,7 +55,7 @@ class Kohana_MMI_DB extends MMI_Data
 	 *	- limit,
 	 *	- offset,
 	 *	- order_by,
-	 *	- where_parms,
+	 *	- where_params,
 	 *	- where_type
 	 *
 	 * @param	string	the table name
@@ -63,11 +63,11 @@ class Kohana_MMI_DB extends MMI_Data
 	 * @param	array	an associative array of query settings
 	 * @return	mixed
 	 */
-	public static function select($table, $as_array = TRUE, $query_parms = array())
+	public static function select($table, $as_array = TRUE, $query_params = array())
 	{
 		// Extract queruy parameters
-		$query_parms = MMI_DB::_get_query_parms($query_parms);
-		extract($query_parms, EXTR_OVERWRITE);
+		$query_params = MMI_DB::_get_query_params($query_params);
+		extract($query_params, EXTR_OVERWRITE);
 
 		// Configure array key, columns, db, distinct, limit, offset, order by, and where type settings
 		$columns = self::_get_columns($columns);
@@ -86,7 +86,7 @@ class Kohana_MMI_DB extends MMI_Data
 		self::_set_columns($query, $columns);
 
 		// Set where parameters
-		self::_set_where_parms($query, $where_parms, $where_type);
+		self::_set_where_params($query, $where_params, $where_type);
 
 		// Set order by
 		self::_set_order_by($query, $order_by);
